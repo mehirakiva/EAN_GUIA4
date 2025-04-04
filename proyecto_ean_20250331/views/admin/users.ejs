@@ -1,0 +1,50 @@
+<%- include('../partials/header') %>
+
+<div class="row">
+  <div class="col-md-12">
+    <h1>Gestión de Usuarios</h1>
+    
+    <a href="/admin/dashboard" class="btn btn-secondary">Volver al Dashboard</a>
+    <div class="card mt-4">
+      <div class="card-header">
+        <h3>Lista de Usuarios</h3>
+        <a href="/admin/users/new" class="btn btn-primary">+ Nuevo Usuario</a>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Fecha de Registro</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% users.forEach(user => { %>
+              <tr>
+                <td><%= user.id %></td>
+                <td><%= user.name %></td>
+                <td><%= user.email %></td>
+                <td><%= user.role %></td>
+                <td> <%= new Date(user.created_at).toLocaleString() %></td>
+                <td>
+                  <a href="/admin/users/edit/<%= user.id %>" class="btn btn-sm btn-warning">Editar</a>
+                  <a href="/admin/users/delete/<%= user.id %>" 
+                     class="btn btn-sm btn-danger"
+                     onclick="return confirm('¿Eliminar este usuario permanentemente?')">
+                    Eliminar
+                  </a>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,45 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Editar Ruta #<%= ruta.id %></h1>
+    <a href="/admin/rutas" class="btn btn-secondary">Volver</a>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="mb-0">Detalles de la Ruta</h3>
+    </div>
+    <div class="card-body">
+      <form action="/admin/rutas/editar/<%= ruta.id %>" method="POST">
+        <div class="mb-3">
+          <label class="form-label">Origen</label>
+          <input type="text" class="form-control" name="ruta_origen" 
+                 value="<%= ruta.ruta_origen %>" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Punto de Descanso (Opcional)</label>
+          <input type="text" class="form-control" name="ruta_descanso" 
+                 value="<%= ruta.ruta_descanso || '' %>">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Destino</label>
+          <input type="text" class="form-control" name="ruta_destino" 
+                 value="<%= ruta.ruta_destino %>" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Hora de Llegada</label>
+          <input type="time" class="form-control" name="ruta_llegada" 
+                 value="<%= ruta.ruta_llegada_formatted %>" required>
+        </div>
+        
+        <div class="d-flex justify-content-end gap-2">
+          <a href="/admin/rutas" class="btn btn-secondary">Cancelar</a>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

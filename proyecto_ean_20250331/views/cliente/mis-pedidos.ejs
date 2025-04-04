@@ -1,0 +1,51 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Mis Pedidos</h1>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <% if (pedidos.length > 0) { %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Fecha</th>
+              <th>Producto</th>
+              <th>Transportadora</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% pedidos.forEach(p => { %>
+              <tr>
+                <td><%= p.id %></td>
+                <td><%= new Date(p.fecha_pedido).toLocaleDateString() %></td>
+                <td><%= p.producto %></td>
+                <td><%= p.nombre_transportadora || 'Por asignar' %></td>
+                <td>
+                  <span class="badge bg-<%= 
+                    p.estado_envio === 'entregado' ? 'success' : 
+                    p.estado_envio === 'cancelado' ? 'danger' : 'warning' 
+                  %>">
+                    <%= p.estado_envio || 'En preparación' %>
+                  </span>
+                </td>
+                <td>
+                  <a href="/mis-pedidos/<%= p.id %>" class="btn btn-sm btn-primary">Ver Detalles</a>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <div class="alert alert-info">No tienes pedidos registrados</div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

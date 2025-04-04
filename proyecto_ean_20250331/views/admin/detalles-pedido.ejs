@@ -1,0 +1,75 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Detalles del Pedido #<%= pedido.id %></h1>
+    <a href="/admin/pedidos" class="btn btn-secondary">Volver</a>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="mb-0">Información Completa</h3>
+    </div>
+    <div class="card-body">
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <h5>Datos Básicos</h5>
+          <table class="table table-bordered">
+            <tr>
+              <th width="30%">Fecha Pedido</th>
+              <td><%= new Date(pedido.fecha_pedido).toLocaleString() %></td>
+            </tr>
+            <tr>
+              <th>Producto</th>
+              <td><%= pedido.producto %></td>
+            </tr>
+            <tr>
+              <th>Estado</th>
+              <td>
+                <span class="badge bg-<%= 
+                  pedido.estado_pedido === 'entregado' ? 'success' : 
+                  pedido.estado_pedido === 'cancelado' ? 'danger' : 
+                  pedido.estado_pedido === 'enviado' ? 'primary' : 'warning' 
+                %>">
+                  <%= pedido.estado_pedido.charAt(0).toUpperCase() + pedido.estado_pedido.slice(1) %>
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        
+        <div class="col-md-6">
+          <h5>Información de Envío</h5>
+          <table class="table table-bordered">
+            <tr>
+              <th width="30%">Cliente</th>
+              <td><%= pedido.cliente_nombre %></td>
+            </tr>
+            <tr>
+              <th>Transportadora</th>
+              <td><%= pedido.nombre_transportadora || 'Sin asignar' %></td>
+            </tr>
+            <tr>
+              <th>Ruta</th>
+              <td><%= pedido.ruta || '--' %></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      
+      <div class="mb-3">
+        <h5>Observaciones</h5>
+        <div class="p-3 bg-light rounded">
+          <%= pedido.observaciones || 'Sin observaciones' %>
+        </div>
+      </div>
+      
+      <div class="d-flex justify-content-end gap-2">
+        <a href="/admin/pedidos/editar/<%= pedido.id %>" class="btn btn-warning">Editar</a>
+        <a href="/admin/pedidos" class="btn btn-primary">Volver</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

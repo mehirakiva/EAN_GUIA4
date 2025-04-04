@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+
+<div class="row">
+  <div class="col-md-8 mx-auto">
+    <div class="card">
+      <div class="card-header">
+        <h3>Bienvenido</h3>
+      </div>
+      <div class="card-body">
+        <% if (user) { %>
+          <h4>Hola <%= user.name %></h4>
+          <p>Tu rol es: <%= user.role %></p>
+          <% if (user.role === 'admin') { %>
+            <a href="/admin/dashboard" class="btn btn-primary">Ir al Dashboard</a>
+          <% } %>
+        <% } else { %>
+          <p>Por favor inicia sesión o regístrate</p>
+          <a href="/login" class="btn btn-primary">Login</a>
+          <a href="/register" class="btn btn-secondary">Registro</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

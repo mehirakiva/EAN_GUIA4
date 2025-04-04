@@ -1,0 +1,36 @@
+body {
+    background-color: #f8f9fa;
+  }
+  
+  .card {
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-header {
+    font-weight: bold;
+  }
+  
+  .navbar {
+    margin-bottom: 30px;
+  }
+  
+  .btn {
+    margin-right: 5px;
+  }
+  
+  .table {
+    margin-top: 20px;
+  }
+  
+  .alert {
+    margin-top: 20px;
+  }
+
+  /* Estilos para la tabla de transportadoras */
+.table-transportadoras {
+  width: 100%;
+}
+.table-transportadoras th {
+  background-color: #f8f9fa;
+}

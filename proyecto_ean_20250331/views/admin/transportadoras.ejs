@@ -1,0 +1,78 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Gestión de Transportadoras</h1>
+    <a href="/admin/dashboard" class="btn btn-secondary">Volver al Dashboard</a>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h3 class="mb-0">Lista de Transportadoras</h3>
+          <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#nuevaTransportadora">
+            + Nueva
+          </button>
+        </div>
+        <div class="card-body">
+          <% if (transportadoras.length > 0) { %>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% transportadoras.forEach(t => { %>
+                  <tr>
+                    <td><%= t.id %></td>
+                    <td><%= t.nombre_transportadora %></td>
+                    <td>
+                      <a href="/admin/transportadoras/editar/<%= t.id %>" class="btn btn-sm btn-warning">Editar</a>
+  <a href="/admin/transportadoras/eliminar/<%= t.id %>" 
+     class="btn btn-sm btn-danger"
+     onclick="return confirm('¿Estás seguro de eliminar esta transportadora?')">
+    Eliminar
+  </a>
+                    </td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          <% } else { %>
+            <div class="alert alert-info">No hay transportadoras registradas</div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para nueva transportadora -->
+<div class="modal fade" id="nuevaTransportadora" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Nueva Transportadora</h5>
+        <button type="button" class="btn-close" data-bs-close="modal"></button>
+      </div>
+      <form action="/admin/transportadoras" method="POST">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Nombre de la transportadora</label>
+            <input type="text" class="form-control" name="nombre_transportadora" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
