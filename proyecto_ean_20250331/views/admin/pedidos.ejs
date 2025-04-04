@@ -1,0 +1,142 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Gestión de Pedidos</h1>
+    <a href="/admin/dashboard" class="btn btn-secondary">Volver al Dashboard</a>
+  </div>
+
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h3 class="mb-0">Lista de Pedidos</h3>
+      <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#nuevoPedido">
+        + Nuevo Pedido
+      </button>
+    </div>
+    <div class="card-body">
+      <% if (pedidos.length > 0) { %>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Producto</th>
+                <th>Cliente</th>
+                <th>Estado</th>
+                <th>Transportadora</th>
+                <th>Ruta</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% pedidos.forEach(p => { %>
+                <tr>
+                  <td><%= p.id %></td>
+                  <td><%= new Date(p.fecha_pedido).toLocaleString() %></td>
+                  <td><%= p.producto %></td>
+                  <td><%= p.cliente_nombre %></td>
+                  <td>
+                    <span class="badge bg-<%= 
+                      p.estado_pedido === 'entregado' ? 'success' : 
+                      p.estado_pedido === 'cancelado' ? 'danger' : 
+                      p.estado_pedido === 'enviado' ? 'primary' : 'warning' 
+                    %>">
+                      <%= p.estado_pedido %>
+                    </span>
+                  </td>
+                  <td><%= p.nombre_transportadora || 'Sin asignar' %></td>
+                  <td><%= p.ruta || '--' %></td>
+                  
+                    <td>
+                      <a href="/admin/pedidos/editar/<%= p.id %>" class="btn btn-sm btn-warning">Editar</a>
+                      <a href="/admin/pedidos/detalles/<%= p.id %>" class="btn btn-sm btn-info">Detalles</a>
+                    </td>
+                  
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      <% } else { %>
+        <div class="alert alert-info">No hay pedidos registrados</div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para nuevo pedido -->
+<div class="modal fade" id="nuevoPedido" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Nuevo Pedido</h5>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close" 
+                onclick="document.getElementById('nuevoPedido').classList.remove('show');"
+                style="background: none; font-size: 1.5rem; line-height: 1; padding: 0.5rem; margin-left: auto;">
+          &times;
+        </button>
+      </div>
+      <form action="/admin/pedidos" method="POST">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Producto</label>
+              <input type="text" class="form-control" name="producto" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Cliente</label>
+              <select class="form-select" name="cliente_id" required>
+                <option value="">Seleccione un cliente...</option>
+                <% clientes.forEach(cliente => { %>
+                  <option value="<%= cliente.id %>">
+                    <%= cliente.name %> (<%= cliente.email %>)
+                  </option>
+                <% }); %>
+              </select>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Estado</label>
+              <select class="form-select" name="estado_pedido">
+                <option value="pendiente">Pendiente</option>
+                <option value="procesando">Procesando</option>
+                <option value="enviado">Enviado</option>
+                <option value="entregado">Entregado</option>
+                <option value="cancelado">Cancelado</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Transportadora</label>
+              <select class="form-select" name="transportadora_id">
+                <option value="">Seleccione...</option>
+                <% transportadoras.forEach(t => { %>
+                  <option value="<%= t.id %>"><%= t.nombre_transportadora %></option>
+                <% }); %>
+              </select>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Ruta</label>
+              <input type="text" class="form-control" name="ruta">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Observaciones</label>
+              <textarea class="form-control" name="observaciones" rows="1"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar Pedido</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

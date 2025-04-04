@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Estado de Envíos</h1>
+    <a href="/admin/dashboard" class="btn btn-secondary">Volver al Dashboard</a>
+    <a href="/admin/estado-envio/nuevo" class="btn btn-primary">+ Nuevo Estado</a>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="mb-0">Listado de Estados de Envío</h3>
+    </div>
+    <div class="card-body">
+      <% if (estadosEnvio.length > 0) { %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Fecha</th>
+              <th>Pedido</th>
+              <th>Cliente</th>
+              <th>Transportadora</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% estadosEnvio.forEach(e => { %>
+              <tr>
+                <td><%= e.id %></td>
+                <td><%= new Date(e.fecha).toLocaleString() %></td>
+                <td><%= e.producto_nombre %></td>
+                <td><%= e.cliente_nombre %></td>
+                <td><%= e.nombre_transportadora %></td>
+                <td>
+                  <span class="badge bg-<%= 
+                    e.estado === 'entregado' ? 'success' : 
+                    e.estado === 'cancelado' ? 'danger' : 'warning' 
+                  %>">
+                    <%= e.estado %>
+                  </span>
+                </td>
+                <td>
+                  <a href="/admin/estado-envio/editar/<%= e.id %>" class="btn btn-sm btn-warning">Editar</a>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <div class="alert alert-info">No hay estados de envío registrados</div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

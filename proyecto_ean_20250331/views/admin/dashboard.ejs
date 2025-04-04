@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+
+<div class="row">
+  <div class="col-md-12"style="height: 80vh;">
+    <h1>Dashboard de Administrador</h1>
+    <p>Bienvenido <%= user.name %></p>
+    
+    <div class="card mt-4">
+      <div class="card-header">
+        <h3>Acciones rápidas</h3>
+      </div>
+      <div class="card-body d-flex justify-content-between">
+        <div>
+          <a href="/admin/users" class="btn btn-primary">Gestionar Cientes</a>
+        </div>
+        <div>
+          <a href="/admin/transportadoras" class="btn btn-primary">Gestionar Transportadoras</a>
+        </div>
+        <div>
+          <a href="/admin/pedidos" class="btn btn-success">Gestionar Pedidos</a>
+        </div>
+        <div>
+          <a href="/admin/rutas" class="btn btn-primary">Gestionar Rutas</a>
+        </div>
+        <div>
+          <a href="/admin/estado-envio" class="btn btn-info">Estado de Envíos</a>
+        </div>
+      </div>
+    </div>
+
+<%- include('../partials/footer') %>

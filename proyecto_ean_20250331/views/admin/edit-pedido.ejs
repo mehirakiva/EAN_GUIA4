@@ -1,0 +1,74 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Editar Pedido #<%= pedido.id %></h1>
+    <a href="/admin/pedidos" class="btn btn-secondary">Volver</a>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="mb-0">Información del Pedido</h3>
+    </div>
+    <div class="card-body">
+      <form action="/admin/pedidos/editar/<%= pedido.id %>" method="POST">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Producto</label>
+            <input type="text" class="form-control" name="producto" value="<%= pedido.producto %>" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Cliente</label>
+            <select class="form-select" name="cliente_id" required>
+              <% clientes.forEach(cliente => { %>
+                <option value="<%= cliente.id %>" <%= cliente.id == pedido.cliente_id ? 'selected' : '' %>>
+                  <%= cliente.name %> (<%= cliente.email %>)
+                </option>
+              <% }); %>
+            </select>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Estado</label>
+            <select class="form-select" name="estado_pedido">
+              <% estados.forEach(estado => { %>
+                <option value="<%= estado %>" <%= estado === pedido.estado_pedido ? 'selected' : '' %>>
+                  <%= estado.charAt(0).toUpperCase() + estado.slice(1) %>
+                </option>
+              <% }); %>
+            </select>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Transportadora</label>
+            <select class="form-select" name="transportadora_id">
+              <option value="">Sin asignar</option>
+              <% transportadoras.forEach(t => { %>
+                <option value="<%= t.id %>" <%= t.id == pedido.transportadora_id ? 'selected' : '' %>>
+                  <%= t.nombre_transportadora %>
+                </option>
+              <% }); %>
+            </select>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Ruta</label>
+            <input type="text" class="form-control" name="ruta" value="<%= pedido.ruta || '' %>">
+          </div>
+        </div>
+        
+        <div class="mb-3">
+          <label class="form-label">Observaciones</label>
+          <textarea class="form-control" name="observaciones" rows="3"><%= pedido.observaciones || '' %></textarea>
+        </div>
+        
+        <div class="d-flex justify-content-end gap-2">
+          <a href="/admin/pedidos" class="btn btn-secondary">Cancelar</a>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
